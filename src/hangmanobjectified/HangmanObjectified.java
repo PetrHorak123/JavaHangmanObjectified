@@ -29,20 +29,33 @@ public class HangmanObjectified {
             "   +---+\n   |   |\n   O   |\n  /|\\  |\n  /    |\n       |\n =========",
             "   +---+\n   |   |\n   O   |\n  /|\\  |\n  / \\  |\n       |\n ========="
         };
-        String result = "_ ".repeat( _word._LettersOfWord.size());
-        boolean end = false;
+        boolean end = false;        
 
         System.out.println("\n- NEW GAME -");
-//        while (!end)
-//        {
+        while (!end)
+        {
             System.out.println(Graphics[mistakesCount]);
-            System.out.println(result);
+            System.out.println(_word.GetWord());
+            System.out.println("DEBUG ONLY: " + _word.GetWordString());
             System.out.println("\nYour guess:");
 
-            //char guess = sc.next().charAt(0);
-
+            //user input
+            char guess = sc.next().toLowerCase().charAt(0);
             
-        //}   
+            //porovnání inputu se slovem
+            int charMatches = 0;
+            for (Letter letter : _word._LettersOfWord) {
+                if (letter._Letter == guess) {
+                    letter.Guessed = true;
+                    charMatches++;
+                }
+            }            
+            if (charMatches == 0)  mistakesCount++;
+
+            //kontrola konce hry 
+            if (_word.CheckIfGuessed() || mistakesCount == 6) end = true;
+
+        }   
 
     }
     
@@ -78,7 +91,7 @@ class Word{
         return "";
     }
 
-    public String GetWordString() // možná potom
+    public String GetWordString() // debug only 
     { 
         String result = "";
         for (Letter letter : _LettersOfWord)
@@ -86,6 +99,27 @@ class Word{
             result += letter._Letter;
         }
         return result.toLowerCase();
+    }
+    
+    public String GetWord(){ // vrací slovo zobrazované hráči
+        String result = "";
+        for (Letter letter : _LettersOfWord) {
+            if (letter.Guessed) {
+                result += (letter._Letter + " ");
+            }
+            else{
+                result += "_ ";
+            }
+        }
+        return result;
+    }
+    
+    public boolean CheckIfGuessed(){
+        int guessed = 0;
+        for (Letter letter : _LettersOfWord) {
+            if (letter.Guessed) guessed++;           
+        }
+        return guessed == _LettersOfWord.size();
     }
 }
 
