@@ -31,16 +31,19 @@ public class HangmanObjectified {
         };
         boolean end = false;        
 
-        System.out.println("\n- NEW GAME -");
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n");
+        System.out.println("\n- NEW GAME -\n");
         while (!end)
         {
             System.out.println(Graphics[mistakesCount]);
             System.out.println(_word.GetWord());
-            System.out.println("DEBUG ONLY: " + _word.GetWordString());
+            //System.out.println("DEBUG ONLY: " + _word.GetWordString());
             System.out.println("\nYour guess:");
 
             //user input
             char guess = sc.next().toLowerCase().charAt(0);
+            
+            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n");
             
             //porovnání inputu se slovem
             int charMatches = 0;
@@ -53,8 +56,22 @@ public class HangmanObjectified {
             if (charMatches == 0)  mistakesCount++;
 
             //kontrola konce hry 
-            if (_word.CheckIfGuessed() || mistakesCount == 6) end = true;
-
+            if (_word.CheckIfGuessed()){
+                end = true;
+                System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n"); // Console.Clear()
+                System.out.println(" ".repeat(((_word.GetWord().length() / 2) - 6) > 0 ? (_word.GetWord().length() / 2) - 6 : 0) + "- YOU WON -\n");
+                System.out.println(_word.GetWord().toUpperCase());
+                System.out.println("\n");
+            } 
+            else if(mistakesCount == 6){
+                end = true;
+                System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n"); // Console.Clear()
+                System.out.println(Graphics[mistakesCount]);
+                _word.RevealWord();
+                System.out.println(_word.GetWord().toUpperCase());
+                System.out.println(" ".repeat(((_word.GetWord().length() / 2) - 7) > 0 ? (_word.GetWord().length() / 2) - 7 : 0) + "- YOU LOST -\n");
+                System.out.println("\n\n\n");
+            }
         }   
 
     }
@@ -112,6 +129,12 @@ class Word{
             }
         }
         return result;
+    }
+    
+        public void RevealWord(){ 
+        for (Letter letter : _LettersOfWord) {
+            letter.Guessed = true;
+        }
     }
     
     public boolean CheckIfGuessed(){
