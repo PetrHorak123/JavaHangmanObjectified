@@ -85,9 +85,8 @@ public class HangmanObjectified {
             if(!"a".equals(input.toLowerCase())){
                 play = false;
             }
-        };
-        
-        
+        }
+                
     }
     
 }

@@ -34,6 +34,7 @@ public class Word {
             Random random = new Random();
             return allLines.get(random.nextInt(1, allLines.size())).toLowerCase();
         } catch (IOException e) {
+            System.out.println("Soubor slova.txt nebyl nalezen");
             e.printStackTrace();
         }
         return "";
