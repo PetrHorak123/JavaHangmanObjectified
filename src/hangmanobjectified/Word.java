@@ -16,21 +16,24 @@ import java.util.Random;
  * @author petrh
  */
 public class Word {
-    public List<Letter> _LettersOfWord; // představuje slovo samotné 
+    
+    final String FILE_NAME = "slova.txt";
+    public List<Letter> lettersOfWord; // představuje slovo samotné 
+    
     public Word() // vytváří se nová instance slova
     {
-        _LettersOfWord = new ArrayList<Letter>(); 
-        for (char character : GetRandomWord().toCharArray()) // naplnění listu písmen slova podle náhodně vybraného slova ze souboru
+        lettersOfWord = new ArrayList<Letter>(); 
+        for (char character : getRandomWord().toCharArray()) // naplnění listu písmen slova podle náhodně vybraného slova ze souboru
         {
             Letter letterToAdd = new Letter(character, false);
-            _LettersOfWord.add(letterToAdd);
+            lettersOfWord.add(letterToAdd);
         }      
     }
 
-    private String GetRandomWord()
+    private String getRandomWord()
     {
         try {
-            List<String> allLines = Files.readAllLines(Paths.get("slova.txt"));
+            List<String> allLines = Files.readAllLines(Paths.get(FILE_NAME));
             Random random = new Random();
             return allLines.get(random.nextInt(1, allLines.size())).toLowerCase();
         } catch (IOException e) {
@@ -39,22 +42,12 @@ public class Word {
         }
         return "";
     }
-
-    public String GetWordString() // debug only 
-    { 
-        String result = "";
-        for (Letter letter : _LettersOfWord)
-        {
-            result += letter._Letter;
-        }
-        return result.toLowerCase();
-    }
     
-    public String GetWord(){ // vrací slovo zobrazované hráči
+    public String getWord(){ // vrací slovo zobrazované hráči
         String result = "";
-        for (Letter letter : _LettersOfWord) {
-            if (letter.Guessed) {
-                result += (letter._Letter + " ");
+        for (Letter letter : lettersOfWord) {
+            if (letter.guessed) {
+                result += (letter.letter + " ");
             }
             else{
                 result += "_ ";
@@ -63,17 +56,17 @@ public class Word {
         return result;
     }
     
-    public void RevealWord(){ 
-        for (Letter letter : _LettersOfWord) {
-            letter.Guessed = true;
+    public void revealWord(){ 
+        for (Letter letter : lettersOfWord) {
+            letter.guessed = true;
         }
     }
     
-    public boolean CheckIfGuessed(){
+    public boolean checkIfGuessed(){
         int guessed = 0;
-        for (Letter letter : _LettersOfWord) {
-            if (letter.Guessed) guessed++;           
+        for (Letter letter : lettersOfWord) {
+            if (letter.guessed) guessed++;           
         }
-        return guessed == _LettersOfWord.size();
+        return guessed == lettersOfWord.size();
     }    
 }
