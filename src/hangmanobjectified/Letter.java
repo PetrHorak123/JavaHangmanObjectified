@@ -9,10 +9,11 @@ package hangmanobjectified;
  * @author petrh
  */
 public class Letter {
+
     char letter;
     boolean guessed;
-    
-    public Letter(char let, boolean gues){
+
+    public Letter(char let, boolean gues) {
         letter = let;
         guessed = gues;
     }
