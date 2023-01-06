@@ -11,10 +11,10 @@ import java.util.*;
  * @author Petr Horák
  */
 public class HangmanObjectified {
-    
+
     static Scanner sc = new Scanner(System.in);
 
-    static void Game() {        
+    static void Game() {
         Word word = new Word();
         int mistakesCount = 0;
         String[] graphics = {
@@ -61,7 +61,7 @@ public class HangmanObjectified {
                 System.out.println(" ".repeat(((word.getWord().length() / 2) - (WIN_PHRASE.length() / 2)) > 0 ? (word.getWord().length() / 2) - (WIN_PHRASE.length() / 2) : 0) + WIN_PHRASE);
                 System.out.println(word.getWord().toUpperCase());
                 System.out.println("\n");
-            } else if (mistakesCount == 6) {
+            } else if (mistakesCount == graphics.length - 1) {
                 end = true;
                 System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n"); // Console.Clear()
                 System.out.println(graphics[mistakesCount]);
